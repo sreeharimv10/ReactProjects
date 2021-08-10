@@ -27,10 +27,11 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        <h1>Selected Pokemon: {selectedPokemon}</h1>
         {pokemons?.map((p) =>
         <div>
-          {p.name}
-        </div>
+          <button onClick ={()=>setPokemon(p.name)}>{p.name}</button>
+</div>
         )}
       </main>
     </div>
