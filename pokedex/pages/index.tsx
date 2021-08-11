@@ -29,9 +29,10 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Selected Pokemon: {selectedPokemon}</h1>
         {pokemons?.map((p) =>
-        <div>
-          <button onClick ={()=>setPokemon(p.name)}>{p.name}</button>
-</div>
+          // eslint-disable-next-line react/jsx-key
+          <div>
+            <button onClick ={()=>setPokemon(p.name)}> {p.name} </button>
+          </div>
         )}
       </main>
     </div>
