@@ -4,8 +4,8 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  const [pokemons ,setPokemons] = useState([]);
-  const [selectedPokemon,setPokemon] =useState([]);
+  const [pokemons ,setPokemons] = useState<any[]>([])
+  const [selectedPokemon,setPokemon] = useState<any[]>([])
   const fetchPokemons = () =>{
     fetch('https://pokeapi.co/api/v2/pokemon/').then((resp) => resp.json()).then(data => {
       setPokemons(data.results);
