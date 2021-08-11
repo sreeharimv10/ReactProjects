@@ -35,8 +35,9 @@ export default function Home(){
 					                  <form className="mb-0  d-flex justify-content-center align-items-center h-100 w-100"
                             onSubmit={searchPokemon}>
 						                    <div>
-							                      <input id="search_name" 
-                                    type="text" 
+							                      <input id="search_name"
+                                    type="text"
+                                    value=""
                                     value={query}
                                     onChange={(e)=>{setQuery(e.currentTarget.value);}}
                                     placeholder="Enter Pokemon Name"/>
