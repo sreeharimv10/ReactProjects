@@ -58,8 +58,18 @@ export default function Home()
 				                </div>
 			              </div>
                 </div>
+                @ts-ignore
                 <h1>{pokemon?.name}</h1>
-                {console.log(pokemon.name)}
+
+                {pokemon?.types?.length > 0 && (
+                    <ul>
+                        {pokemon.types.map((t) =>
+                        {
+                            return <li>{t.type.name}</li>
+                        })}
+                    </ul>
+                )}
+
                 {pokemon?.sprites && (
                     <img src={pokemon.sprites.front_default}/>
                 )}
