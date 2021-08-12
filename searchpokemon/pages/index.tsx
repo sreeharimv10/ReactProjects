@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 
 export default function Home(){
-    const [pokemon ,putPokemon] = useState<any[]>([])
+    const [pokemon ,putPokemon] = useState([])
     const [query,setQuery]=useState('');
 
     const searchPokemon = (e: { preventDefault: () => void; }) =>{
