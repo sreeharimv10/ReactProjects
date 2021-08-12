@@ -62,5 +62,5 @@ export default function Home()
                 {console.log(pokemon.name)}
             </main>
         </div>
-  )
-} 
+    )
+}
