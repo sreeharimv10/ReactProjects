@@ -58,13 +58,13 @@ export default function Home()
 				                </div>
 			              </div>
                 </div>
-                // @ts-ignore
                 <h1>{pokemon?.name}</h1>
 
                 {pokemon?.types?.length > 0 && (
                     <ul>
                         {pokemon.types.map((t) =>
                         {
+                            // eslint-disable-next-line react/jsx-key
                             return <li>{t.type.name}</li>
                         })}
                     </ul>
