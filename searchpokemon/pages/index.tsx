@@ -3,7 +3,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 
 
-export default function Home(){
+export default function Home()
+{
     const [pokemon ,putPokemon] = useState([])
     const [query,setQuery]=useState('');
 
@@ -16,8 +17,10 @@ export default function Home(){
         });
     };
 
-    console.log(pokemon, 'pokemon state')
+    useEffect(()=>{
 
+    });
+    
     return (
         <div>
             <Head>
