@@ -60,6 +60,9 @@ export default function Home()
                 </div>
                 <h1>{pokemon?.name}</h1>
                 {console.log(pokemon.name)}
+                {pokemon?.sprites && (
+                    <img src={pokemon.sprites.front_default}/>
+                )}
             </main>
         </div>
     )
