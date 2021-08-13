@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
 {/*@ts-ignore*/}
 const PokemonPage = ({name}) =>
 {
@@ -15,6 +16,7 @@ const PokemonPage = ({name}) =>
         })
     };
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(searchPokemon, []);
 
 
@@ -34,10 +36,11 @@ const PokemonPage = ({name}) =>
                     </ul>
                 )}
                 {/*@ts-ignore*/}
-                {pokemon?.sprites && {/*@ts-ignore*/}
-                (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={pokemon.sprites.front_default}/>)}
+                {pokemon?.sprites &&(
+                    // eslint-disable-next-line jsx-a11y/alt-text
+                    <Image src={/*@ts-ignore*/
+                    pokemon.sprites.front_default}/>
+                    )}
         </div>
 }
 

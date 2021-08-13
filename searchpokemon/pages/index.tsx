@@ -74,14 +74,14 @@ export default function Home()
                         })}
                     </ul>
                 )}
-
                 {/*@ts-ignore*/}
                 {pokemon?.sprites &&
                 (
-                    // eslint-disable-next-line jsx-a11y/alt-text
-                    <Image src={pokemon.sprites.front_default}/>
+                    //eslint-disable-next-line jsx-a11y/alt-text
+                    <Image src={/*@ts-ignore*/
+                    pokemon.sprites.front_default}/>
                 )}
             </main>
         </div>
     )
-}
+} 
