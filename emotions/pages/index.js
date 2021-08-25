@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import isPropValid from '@emotion/is-prop-valid'
 import styles from '../styles/Home.module.css'
 import styled from '@emotion/styled'
 import { css, cx } from '@emotion/css'
@@ -21,10 +22,10 @@ export default function Home()
   //Styling a Text___________________________________//
 
 
-  //Button Styling________________
-  const Button1 = styled.button`//
-  color: grey;`                //
-  //Button Styling____________//
+  //Button Styling_________________
+  const Button1 = styled.button` //
+  color: grey;`                 //
+  //Button Styling_____________//
 
 
   // Button Style Changing based on Props_______________
@@ -65,12 +66,23 @@ export default function Home()
   const Aside = Section.withComponent('aside')                              //
   //Using multiple components with 1 Style_________________________________//
 
-  const H1 = styled.h1(
-    {
-      fontSize: 20
-    },
-    props => ({ color: props.color })
-  )
+
+  //Object Styling__________________________
+  const H1 = styled.h1(                   //
+    {                                    //
+      fontSize: 20                      //
+    },                                 //
+    props => ({ color: props.color }) //
+  )                                  //
+  //Object Styling__________________//
+
+  //
+  const H11 = styled('h1', {
+    shouldForwardProp: prop =>
+      isPropValid(prop) && prop !== 'color'
+  })(props => ({
+    color: 'hotpink'
+  }))
 
 
   return (
@@ -116,10 +128,14 @@ export default function Home()
 
       <H1 color="lightgreen">This is lightgreen</H1>
       <br/>
-      
+
+      <H11 color="lightgreen">This is lightgreen</H11>
+      <br/>
+
       <Container column>
         <Button2>REGULAR BUTTON PROP</Button2>
         <br/>
+
         <Button2 primary>PRIMARY BUTTON PROP</Button2>
       </Container>
     </div>
