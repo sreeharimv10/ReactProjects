@@ -2,31 +2,76 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import styled from '@emotion/styled'
+import { css, cx } from '@emotion/css'
 
 export default function Home()
 {
+  //Hover color change____
+  const color = 'white' //
+  //Hover color change_//
 
-  //Styling a text
-  const Basic = ({ className }) => (
-    <div className={className}>WELCOME</div>
+  //Styling a text____________________________________________
+  const Basic = ({ className }) =>                          //
+  (                                                        //
+    <div className={className}>Sample Styled Text</div>   //
+  )                                                      //
+                                                        //
+  const Fancy = styled(Basic)`                         //
+    color: hotpink;`                                  //
+  //Styling a Text___________________________________//
+
+
+  //Button Styling________________
+  const Button1 = styled.button`//
+  color: grey;`                //
+  //Button Styling____________//
+
+
+  // Button Style Changing based on Props_______________
+  const Button2 = styled.button`                      //
+  color: ${props =>                                  //
+    props.primary ? 'black' : 'royalblue'};`        //
+                                                   //
+  const Container = styled.div(props => (         //
+  {                                              //
+    display: 'flex',                            //
+    flexDirection: props.column && 'column'    //
+  }))                                         //
+  // Button Style Changing based on Props____//
+
+
+  //Styling a Button & change button text color by hovering_
+  const Button3 = styled.button`                          //
+          padding: 10px;                                 //
+          background-color: hotpink;                    //
+          font-size: 24px;                             //
+          border-radius: 50px;                        //
+          color: black;                              //
+          font-weight: bold;                        //
+          &:hover                                  //
+          {                                       //
+            color: white;                        //
+          }`                                    //
+  //Styling a Button & etc..___________________//
+
+
+
+  //Using multiple components with 1 Style_________________________________________
+  const Section = styled.section`                                                //
+    background: #333;                                                           //
+    color: #fff;`                                                              //
+                                                                              //
+  //this component(Aside) has same styles as Section but it renders as aside //
+  const Aside = Section.withComponent('aside')                              //
+  //Using multiple components with 1 Style_________________________________//
+
+  const H1 = styled.h1(
+    {
+      fontSize: 20
+    },
+    props => ({ color: props.color })
   )
 
-  const Button1 = styled.button`
-  color: grey;`
-
-  // Changing based on Props
-  const Button2 = styled.button`
-  color: ${props =>
-    props.primary ? 'black' : 'royalblue'};`
-
-  const Container = styled.div(props => (
-  {
-    display: 'flex',
-    flexDirection: props.column && 'column'
-  }))
-
-  const Fancy = styled(Basic)`
-    color: hotpink;`
 
   return (
     <div className={styles.container}>
@@ -39,17 +84,44 @@ export default function Home()
       <Fancy/>
       <br/>
 
+
+      <div
+          className=
+          {
+            css`
+                padding: 5px;
+                background-color: hotpink;
+                font-size: 24px;
+                border-radius: 50px;
+                font-style: italic;
+                font-weight: bold;
+                &:hover
+                {
+                  color: ${color};
+                }`
+          }>
+          Hover to change color
+      </div>
+      <br/>
+
       <Button1>NORMAL BUTTON</Button1>
       <br/>
 
+      <Section>This is a section</Section>
+      <Aside>This is an aside</Aside>
+      <br/>
+
+      <Button3>Hover to change color</Button3>
+      <br/>
+
+      <H1 color="lightgreen">This is lightgreen</H1>
+      <br/>
+      
       <Container column>
         <Button2>REGULAR BUTTON PROP</Button2>
         <br/>
         <Button2 primary>PRIMARY BUTTON PROP</Button2>
       </Container>
-      <br/>
-      
-
     </div>
   )
 
