@@ -3,7 +3,8 @@ import Image from 'next/image'
 import isPropValid from '@emotion/is-prop-valid'
 import styles from '../styles/Home.module.css'
 import styled from '@emotion/styled'
-import { css, cx } from '@emotion/css'
+import { css, jsx } from '@emotion/react'
+
 
 export default function Home()
 {
@@ -16,29 +17,25 @@ export default function Home()
   (                                                        //
     <div className={className}>Sample Styled Text</div>   //
   )                                                      //
-                                                        //
-  const Fancy = styled(Basic)`                         //
-    color: hotpink;`                                  //
-  //Styling a Text___________________________________//
+        /****************************************/      //
+  const Fancy = styled(Basic)`color: hotpink;`         //
+  //Styling a Text____________________________________//
 
 
-  //Button Styling_________________
-  const Button1 = styled.button` //
-  color: grey;`                 //
-  //Button Styling_____________//
+  //Button Styling_____________________________
+  const Button1 = styled.button`color: grey;`//
+  //Button Styling__________________________//
 
 
-  // Button Style Changing based on Props_______________
-  const Button2 = styled.button`                      //
-  color: ${props =>                                  //
-    props.primary ? 'black' : 'royalblue'};`        //
-                                                   //
-  const Container = styled.div(props => (         //
-  {                                              //
-    display: 'flex',                            //
-    flexDirection: props.column && 'column'    //
-  }))                                         //
-  // Button Style Changing based on Props____//
+  // Button Style Changing based on Props______________________________
+  const Button2 = styled.button`                                     //
+  color: ${props => props.primary ? 'black' : 'royalblue'};`        //
+        /***************************************************/      //
+  const Container = styled.div(props => (                         //
+  {                                                              //
+    display: 'flex', flexDirection: props.column && 'column'    //
+  }))                                                          //
+  // Button Style Changing based on Props_____________________//
 
 
   //Styling a Button & change button text color by hovering_
@@ -56,7 +53,6 @@ export default function Home()
   //Styling a Button & etc..___________________//
 
 
-
   //Using multiple components with 1 Style_________________________________________
   const Section = styled.section`                                                //
     background: #333;                                                           //
@@ -72,17 +68,53 @@ export default function Home()
     {                                    //
       fontSize: 20                      //
     },                                 //
-    props => ({ color: props.color }) //
-  )                                  //
-  //Object Styling__________________//
+    props => ({ color: props.color }))//
+  //Object Styling___________________//
 
-  //
-  const H11 = styled('h1', {
-    shouldForwardProp: prop =>
-      isPropValid(prop) && prop !== 'color'
-  })(props => ({
-    color: 'hotpink'
-  }))
+
+  //shouldForwardProp__________________________________________________
+  const H11 = styled('h1',                                             //
+  {                                                                   //
+    shouldForwardProp: prop => isPropValid(prop) && prop !== 'color' //
+  })                                                                //
+  (props => ({color: 'hotpink'}))                                  //
+  //shouldForwardProp_____________________________________________//
+
+
+  //Button with 'as prop'________________________________
+  const Button4 = styled.button`                       //
+    padding: 10px;                                    //
+    background-color: hotpink;                       //
+    color: rebeccapurple;                           //
+    border-radius: 50px;                           //
+    font-family: 'Times New Roman', Times, serif;`//
+  //Button with 'as prop'________________________//
+
+
+  //Nested Component____________________
+  const Example = styled('span')`     //
+    color: lightgreen;               //
+    font-weight: bold;              //
+    & > a                          //
+    {                             //
+      color: hotpink;            //
+      font-size: 24px;          //
+    }`                         //
+  //Nested Component__________//
+
+  //Styling for Composition part______
+ //const base = css`color: hotpink;` //
+//Styling for Composition part___//
+
+  const danger = css`
+  color: red;
+`
+
+const base = css`
+  background-color: darkgreen;
+  color: turquoise;
+`
+
 
 
   return (
@@ -92,6 +124,7 @@ export default function Home()
         <meta name="description" content="Generated by create next app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
 
       <Fancy/>
       <br/>
@@ -138,6 +171,24 @@ export default function Home()
 
         <Button2 primary>PRIMARY BUTTON PROP</Button2>
       </Container>
+
+      <br/>
+      <Button4
+        as="a"
+        href="https://github.com/emotion-js/emotion">Emotion on GitHub</Button4>
+
+      <br/>
+      <Example>This is <a>nested</a>. </Example>
+
+      <br/>
+      <div>
+    <div css={base}>This will be turquoise</div>
+    <div css={[danger, base]}>
+      This will be also be turquoise since the base styles
+      overwrite the danger styles.
+    </div>
+    <div css={[base, danger]}>This will be red</div>
+  </div>
     </div>
   )
 
