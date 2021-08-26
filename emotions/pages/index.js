@@ -3,8 +3,7 @@ import Image from 'next/image'
 import isPropValid from '@emotion/is-prop-valid'
 import styles from '../styles/Home.module.css'
 import styled from '@emotion/styled'
-import { css, jsx } from '@emotion/react'
-
+import { css, cx } from '@emotion/css'
 
 export default function Home()
 {
@@ -102,18 +101,6 @@ export default function Home()
     }`                         //
   //Nested Component__________//
 
-  //Styling for Composition part______
- //const base = css`color: hotpink;` //
-//Styling for Composition part___//
-
-  const danger = css`
-  color: red;
-`
-
-const base = css`
-  background-color: darkgreen;
-  color: turquoise;
-`
 
 
 
@@ -179,17 +166,9 @@ const base = css`
 
       <br/>
       <Example>This is <a>nested</a>. </Example>
+    </div>
 
-      <br/>
-      <div>
-    <div css={base}>This will be turquoise</div>
-    <div css={[danger, base]}>
-      This will be also be turquoise since the base styles
-      overwrite the danger styles.
-    </div>
-    <div css={[base, danger]}>This will be red</div>
-  </div>
-    </div>
+    
   )
 
 }
