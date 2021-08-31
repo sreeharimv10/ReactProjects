@@ -28,20 +28,23 @@ export default function Home()
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"/>
                 </Head>
             <main>
-                <div id="search-box" className="bg-primary w-100 p-2" style={{backgroundColor:"blue", padding:20}}>
-			        <div className="row m-0">
-                        <Image src={logo} alt="Pokemon" height="60" width="160"/>
+                <div id="search-box" className="bg-primary w-100 p-2" style={{backgroundColor:"blue", padding:15,
+                                                display: "flex", alignItems: "center"}}>
+			        <div className="row m-0" style={{justifyContent:"initial", paddingInlineStart:100}}>
+                        <Image src={logo} alt="Pokemon" height="60" width="160" />
                     </div>
-                    <div className='col-md-9'>
+                    <div className='col-md-9' style={{textAlign:"right", paddingInlineStart:790}}>
 					    <form className="mb-0  d-flex justify-content-center align-items-center h-100 w-100">
-						    <div style={{textAlign:"right", paddingInlineEnd:290}}>
-							    <input id="search_name"
+						    <div>
+							    <input id="search_name" style={{padding: 10, borderTopLeftRadius: 30
+                                                                        , borderBottomLeftRadius: 30}}
                                     type="text"
                                     value={query}
                                     onChange={(e)=>{setQuery(e.currentTarget.value);}}
                                     placeholder="Enter Pokemon Name"/>
 
-                                <input id="submit_button"
+                                <input id="submit_button" style={{padding: 10, borderTopRightRadius: 30
+                                                                        , borderBottomRightRadius: 30}}
                                     onClick={(e)=>{
                                     e.preventDefault();
                                     console.log("searched for "+query)
@@ -54,10 +57,15 @@ export default function Home()
                                     });}}
                                     type="submit" value="Search"
                                     className="btn btn-light p-2" />
-						                    </div>
+						    </div>
 					    </form>
 				    </div>
                 </div>
+                {pokemon?.sprites && (
+                    <img src={pokemon.sprites.front_default} height="90" width="90"/>
+                    
+                )}
+
                 <h1>{pokemon?.name}</h1>
 
                 {pokemon?.types?.length > 0 && (
@@ -70,9 +78,7 @@ export default function Home()
                     </ul>
                 )}
 
-                {pokemon?.sprites && (
-                    <img src={pokemon.sprites.front_default}/>
-                )}
+                
             </main>
         </div>
     )
