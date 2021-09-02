@@ -29,6 +29,7 @@ export default function Home()
     width: 250px;
     margin-left: 32px;
     margin-top: 8px;
+    visibility: hidden;
     `
 
     return (
@@ -75,23 +76,44 @@ export default function Home()
 				    </div>
                 </div>
 
-                <PokemonDetails>
-                    {pokemon?.sprites && (
-                        <img src={pokemon.sprites.front_default} align="left" height="100" width="110"/>)}
-                    <br/>
-                    <h1>{pokemon?.name}</h1>
-                    <br/>
-                    {pokemon?.types?.length > 0 && (
+                {pokemon?.name &&
+                    <PokemonDetails style={{visibility: "visible"}}>
+                        {pokemon?.sprites && (
+                            <img src={pokemon.sprites.front_default} align="left" height="100" width="110"/>)}
+                        <br/>
+                        <h1>{pokemon?.name.toUpperCase()}</h1>
+                        <br/>
+
+                        {pokemon?.types?.length > 0 && (
                         <ul>
-                            {pokemon.types.map((t) =>
+                            <b>Type:</b>
                             {
-                                // eslint-disable-next-line react/jsx-key
-                                return <li>{t.type.name}</li>
-                            })}
+                                pokemon.types.map((t) =>
+                                {
+                                    // eslint-disable-next-line react/jsx-key
+                                    return <b> {t.type.name.toUpperCase()}</b>
+                                })
+                            }
                         </ul>
-                    )}
-                </PokemonDetails>
-                
+                        )}
+
+                        
+                        {pokemon?.types?.length > 0 && (
+                        <ul>
+                            <b>Abilities: </b>
+                            {
+                                
+                                pokemon.abilities.map((t) =>
+                                {
+                                    // eslint-disable-next-line react/jsx-key
+                                    return <b>{t.ability.name.toUpperCase()}, </b>
+                                })
+                            }
+                        </ul>
+                        )}
+
+                    </PokemonDetails>
+                }
             </main>
         </div>
     )
