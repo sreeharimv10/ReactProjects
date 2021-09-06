@@ -3,9 +3,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styled from '@emotion/styled'
 import logo from '../images/pokemon_logo.png'
+import Link from 'next/link'
 
 
-export default function Home()
+
+/** @param {import('next').InferGetStaticPropsType<typeof getStaticProps> } props */
+export default function Home(props)
 {
     const [pokemon,putPokemon] = useState([])
     const [query,setQuery]=useState('');
@@ -40,11 +43,30 @@ export default function Home()
         position: fixed;
         bottom: 0px;
         right:550px ;
-        margin-bottom: 10px;
+        margin-bottom: 70px;
         &:hover
         {
             color: red;
         }`
+
+    const PokemonType = styled.button`
+        padding: 10px;
+        background-color: black;
+        font-size: 24px;
+        border-radius: 50px;
+        color: black;
+        font-weight: bold;
+        margin-left: 32px;
+        margin-top: 16px;
+        position: fixed;
+        bottom: 0px;
+        right:650px ;
+        margin-bottom: 10px;
+        &:hover
+        {
+            color: yellow;
+        }`
+
 
     const Nested = styled('span')`
         font-size: 24px;
@@ -54,14 +76,24 @@ export default function Home()
         position: fixed;
         bottom: 0px;
         left: 0px;
-        margin-bottom: 15px;
+        margin-bottom: 80px;
         & > b
         {
             color: hotpink;
             font-size: 24px;
         }`
 
-    return ( 
+    const Normal = styled('span')`
+        font-size: 24px;
+        color: orangered;
+        margin-left: 32px;
+        font-weight: bold;
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        margin-bottom: 20px;`
+
+    return (
         <div>
             <Head>
                 <title>Pokedex API</title>
@@ -143,9 +175,18 @@ export default function Home()
                 }
 
                 <Nested>New to Pokemon, <b>Click the button to see some of the Pokemons</b></Nested>
-                <form method="POST" action="pokemontypes.js">
-                    <PokemonName>Pokemon Names</PokemonName>
-                </form>
+                <Link href="/pokemonnames">
+                    <a>
+                        <PokemonName>Pokemon Names</PokemonName>
+                    </a>
+                </Link>
+
+                <Normal>Click the button to see various kinds/types of Pokemon</Normal>
+                <Link href="/types/pokemontypes">
+                    <a>
+                        <PokemonType>Pokemon Types</PokemonType>
+                    </a>
+                </Link>
             </main>
         </div>
     )
