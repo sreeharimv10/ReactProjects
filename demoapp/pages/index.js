@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Header from './component/header/header';
-import Content from './component/content/content';
+import Header from '../component/header/header';
+import Content from '../component/content/content';
 
-import {AppWrap} from './appStyles.js';
+import {AppWrap} from '../styles/appStyles.js';
 
 function MyApp() {
   return (
