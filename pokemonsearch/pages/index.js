@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 
 
-/** @param {import('next').InferGetStaticPropsType<typeof getStaticProps> } props */
+
 export default function Home(props)
 {
     const [pokemon,putPokemon] = useState([])
@@ -22,14 +22,6 @@ export default function Home(props)
         });
     };*/
 
-    const PokemonDetails = styled.section `
-        background-color:white;
-        padding-bottom: 5px;
-        height: auto;
-        width: 250px;
-        margin-left: 32px;
-        margin-top: 8px;
-        visibility: hidden;`
 
     const PokemonName = styled.button`
         padding: 10px;
@@ -77,7 +69,7 @@ export default function Home(props)
         bottom: 0px;
         left: 0px;
         margin-bottom: 80px;
-        & > b
+        & > b1
         {
             color: hotpink;
             font-size: 24px;
@@ -102,22 +94,26 @@ export default function Home(props)
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"/>
                 </Head>
             <main>
-                <div id="search-box" classNameName="bg-primary w-100 p-2" style={{backgroundColor:"blue", padding:15,
-                                                display: "flex", alignItems: "center"}}>
-			        <div classNameName="row m-0" style={{justifyContent:"initial", paddingInlineStart:100}}>
-                        <Image src={logo} alt="Pokemon" height="60" width="160" />
-                    </div>
-                    <div classNameName='col-md-9' style={{textAlign:"right", paddingInlineStart:790}}>
-					    <form classNameName="mb-0  d-flex justify-content-center align-items-center h-100 w-100">
-						    <div>
-							    <input id="search_name" style={{padding: 10, borderTopLeftRadius: 30
+                <div className="max-w-sm mx-auto overflow-hidden md:max-w-full  bg-blue-600">
+                    <div id="search-box" className=" items-center text-center p-4 md:p-3 flex w-100 ">
+			            <div className=" pl-24 absolute " >
+                            <div className="md:flex">
+                                <div className="md:flex-shrink-0">
+                                    <Image className="h-48 w-full object-cover md:h-full md:w-48" src={logo} alt="Pokemon" height="50" width="140"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{paddingInlineStart:790}}>
+					        <form className="mb-0  flex justify-content-center align-items-center h-100 w-100">
+						        <div className="">
+							        <input id="search_name" className="p-6     " style={{padding: 10, borderTopLeftRadius: 30
                                                                         , borderBottomLeftRadius: 30}}
                                     type="text"
                                     value={query}
                                     onChange={(e)=>{setQuery(e.currentTarget.value);}}
                                     placeholder="Enter Pokemon Name"/>
 
-                                <input id="submit_button" style={{padding: 10, borderTopRightRadius: 30
+                                    <input id="submit_button" style={{padding: 10, borderTopRightRadius: 30
                                                                         , borderBottomRightRadius: 30}}
                                     onClick={(e)=>{
                                     e.preventDefault();
@@ -130,14 +126,16 @@ export default function Home(props)
                                         console.log(data);
                                     });}}
                                     type="submit" value="Search"
-                                    classNameName="btn btn-light p-2" />
+                                    className="btn btn-light p-2" />
 						    </div>
 					    </form>
 				    </div>
                 </div>
+                </div>
+                
 
                 {pokemon?.name &&
-                    <PokemonDetails style={{visibility: "visible"}}>
+                    <div className="bg-white pb-1.5 h-auto w-60 ml-8 mt-2" >
                         {pokemon?.sprites && (
                             <img src={pokemon.sprites.front_default} align="left" height="100" width="110"/>)}
                         <br/>
@@ -171,10 +169,10 @@ export default function Home(props)
                             }
                         </ul>
                         )}
-                    </PokemonDetails>
+                    </div>
                 }
 
-                <Nested>New to Pokemon, <b>Click the button to see some of the Pokemons</b></Nested>
+                <Nested>New to Pokemon, <b1>Click the button to see some of the Pokemons</b1></Nested>
                 <Link href="/pokemonnames">
                     <a>
                         <PokemonName>Pokemon Names</PokemonName>
