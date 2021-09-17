@@ -34,7 +34,7 @@ export default function Home()
           </Link>
           <form className="form-inline">
             {/*<div className=" form-control mr-sm-2 container" style={{}}>*/}
-              <input className="form-control my-2 my-sm-0" style={{marginLeft:500,borderTopLeftRadius: 30,
+              <input className="form-control container my-2 my-sm-0" style={{borderTopLeftRadius: 30,
                                     borderBottomLeftRadius: 30}}
                     type="text"
                     value={query}
