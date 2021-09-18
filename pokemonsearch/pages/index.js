@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import logo from '../images/pokemon_logo.png'
 import Link from 'next/link'
-import {electrictypes} from './pokemon/components/[electric]'
+//import {electrictypes} from './pokemon/components/electric'
 
 
 
