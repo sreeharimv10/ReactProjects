@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import styles from '../styles/Home.module.css'
-import styled from '@emotion/styled'
 import logo from '../images/pokemon_logo.png'
 
 

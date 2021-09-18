@@ -10,19 +10,18 @@ export const getServerSideProps =async ()=>
         props :{pokemons : data}
     }
 }
-
 const types=({pokemons})=>
 {
     return(
-        <div>
+        <div className="flex px-10 space-x-10 overflow-x-scroll text-2xl sm:px-20 whitespace-nowrap sm:space-x-20 scrollbar-hide">
         {
             pokemons.results.map((pokemon)=>{
                 return (
                 // eslint-disable-next-line react/jsx-key
-                <div>
+                <div className="transition transform">
                     <Link href = {"/types/"+pokemon.name}  key={pokemon.name}>
                         <a>
-                            <h3 style={{fontSize: 24,
+                            <h3 className="last:pr-24 " style={{fontSize: 24,
                                         color: "orange",
                                         marginLeft: 32,
                                         fontWeight: "bold"}}>{pokemon.name}</h3>
