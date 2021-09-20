@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/link-passhref */
 import Link from 'next/link'
 import styled from '@emotion/styled'
 
@@ -13,20 +14,18 @@ export const getServerSideProps =async ()=>
 const types=({pokemons})=>
 {
     return(
-        <div className="flex px-10 space-x-10 overflow-x-scroll text-2xl sm:px-20 whitespace-nowrap sm:space-x-20 scrollbar-hide">
+        <div className="flex px-10 mt-4 mr-8 space-x-10 text-2xl sm:px-20 whitespace-nowrap sm:space-x-20 scrollbar-hide">
         {
-            pokemons.results.map((pokemon)=>{
+            pokemons.results.map((pokemon)=>
+            {
                 return (
                 // eslint-disable-next-line react/jsx-key
                 <div className="transition transform">
-                    <Link href = {"/types/"+pokemon.name}  key={pokemon.name}>
-                        <a>
-                            <h3 className="last:pr-24 " style={{fontSize: 24,
-                                        color: "orange",
-                                        marginLeft: 32,
-                                        fontWeight: "bold"}}>{pokemon.name}</h3>
-                        </a>
-                    </Link>
+                    <div key={pokemon.name}>
+                        <h3 className="font-sans text-2xl font-bold text-red-500 last:pr-24 md:font-serif">
+                            {pokemon.name}
+                        </h3>
+                    </div>
                 </div>
             )})
         }

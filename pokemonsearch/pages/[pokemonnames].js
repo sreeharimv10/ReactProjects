@@ -9,7 +9,8 @@ import logo from '../images/pokemon_logo.png'
 export default function Home() {
   const [pokemons ,setPokemons] = useState([])
   const [selectedPokemon,setPokemon] = useState([])
-  const fetchPokemons = () =>{
+  const fetchPokemons = () =>
+  {
     fetch('https://pokeapi.co/api/v2/pokemon/').then((resp) => resp.json()).then(data => {
       setPokemons(data.results);
       console.log(data.results);
@@ -37,22 +38,12 @@ export default function Home() {
                 </a>
             </Link>
         </nav>
-          <h1 style={{marginLeft: 32}}>Selected Pokemon: {selectedPokemon}</h1>
+          <h1 className="ml-8">Selected Pokemon: {selectedPokemon}</h1>
           <div>
           {pokemons?.map((p) =>
             // eslint-disable-next-line react/jsx-key
             <div>
-              <button style={{
-                      padding: 5,
-                      backgroundColor: "hotpink",
-                      fontSize: 15,
-                      borderRadius: 10,
-                      color: "black",
-                      fontWeight: "bold",
-                      marginLeft: 32,
-                      marginTop: 16,
-                      marginBottom: 8
-              }}
+              <button className="bg-pink-600 text-base p-1.5 ml-8 mt-4 mb-2 rounded-xl text-black font-bold"
               onClick ={()=>setPokemon(p.name.toUpperCase())}> {p.name} </button>
             </div>
           )}
