@@ -3,11 +3,19 @@ import Head from 'next/head'
 import Image from 'next/image'
 import logo from '../images/pokemon_logo.png'
 import Link from 'next/link'
-//import {electrictypes} from './pokemon/components/electric'
+
+export const getServerSideProps =async ()=>
+{
+
+    const res = await fetch(`https://pokeapi.co/api/v2/type/electric`)
+    const etype = await res.json()
+    return{
+        props :{electric : etype}
+    }
+}
 
 
-
-export default function HeaderSec(props)
+export default function HeaderSec({electric})
 {
     const [pokemon,putPokemon] = useState([])
     const [query,setQuery]=useState('');
@@ -38,9 +46,9 @@ export default function HeaderSec(props)
             </Head>
 
             <main>
-                <nav className='flex flex-wrap items-center p-3 bg-blue-600 '>
+                <nav className='flex flex-wrap items-center p-3 bg-blue-600'>
 
-                    <Link href='#'>
+                    <Link href='/'>
                         <a className='inline-flex items-center p-2 mr-4 '>
                             <Image src={logo} alt="Logo" className="" width="190" height="70"/>
                         </a>
@@ -98,14 +106,12 @@ export default function HeaderSec(props)
                                     <a className="p-1 bg-white rounded-full">Types</a>
                                 </Link>
                             </div>
-
                         </div>
                     </div>
                 </nav>
 
                 {pokemon?.name &&
-                    <div className="items-center max-w-xs pt-6 mt-3 ml-auto mr-auto overflow-hidden bg-gray-300 border-4 border-blue-600 rounded shadow-lg">
-
+                <div className="items-center max-w-xs pt-6 mt-3 mb-4 ml-auto mr-auto overflow-hidden bg-gray-300 border-4 border-blue-600 rounded shadow-lg">
                         {pokemon?.sprites && (
 
                             // eslint-disable-next-line @next/next/no-img-element
@@ -146,7 +152,35 @@ export default function HeaderSec(props)
                         </div>
                     </div>
                 }
-                
+
+                <h1 className="sm:text-xl" style={{textAlign:"center"}} >
+                    <b>ELECTRIC POKEMONS</b>
+                </h1>
+                <div className="flex space-x-10 sm:w-100% sm:space-x-20 scrollbar-hide max-w-full overflow-y-auto  mt-4 mr-8 space-x-10 text-2xl sm:px-20 whitespace-nowrap">
+                {
+                    electric.pokemon.map((name) =>
+                    {
+                        return (
+                        
+                            
+                                    <div key={name}>
+                                    <Link href={`/pokemon/${name.pokemon.name}`}>
+                                <a>
+                                        <div className="rounded-lg cardz">
+                                            <img className="ml-auto mr-auto" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${name.pokemon.url.slice(34,-1)}.png`} />
+                                            <div className="mb-2 text-xl font-bold" style={{textAlign:"center"}}>
+                                            {
+                                                name.pokemon.name.toUpperCase()
+                                            }
+                                            </div>
+                                        </div>
+                                    
+                                </a>
+                                </Link>
+                            </div>)
+                        })
+                }
+                </div>
             </main>
         </div>
     )
