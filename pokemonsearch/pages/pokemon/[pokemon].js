@@ -8,23 +8,19 @@ import Link from 'next/link';
 
 const PokemonPage = ({name, pokemon, error}) =>
 {
-
-    // Client Side Rendering
-    /*const [pokemon,setPokemon] = useState<any[]>([])
-
-
-    const searchPokemon = () =>
-    {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${name}`).then((resp)=>resp.json()).then(data=>{
-            setPokemon(data);
-        }).catch((err) =>
-        {
-            alert('ErroR')
-        })
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(searchPokemon, []);*/
+    // Client Side Rendering________________________________________________________________________________
+    /*const [pokemon,setPokemon] = useState<any[]>([])                                                    //
+    const searchPokemon = () =>                                                                          //
+    {                                                                                                   //
+        fetch(`https://pokeapi.co/api/v2/pokemon/${name}`).then((resp)=>resp.json()).then(data=>{      //
+            setPokemon(data);                                                                         //
+        }).catch((err) =>                                                                            //
+        {                                                                                           //
+            alert('ErroR')                                                                         //
+        })                                                                                        //
+    };                                                                                           //
+    // eslint-disable-next-line react-hooks/exhaustive-deps                                     //
+    useEffect(searchPokemon, []);    ________________________________________________________*/
 
     return error ?
         <div>
@@ -40,7 +36,7 @@ const PokemonPage = ({name, pokemon, error}) =>
             </Link>
         </nav>
 
-        <div className="flex flex-col items-center justify-center max-w-sm p-10 m-auto mt-5 bg-pink-400 rounded-3xl">
+        <div className="flex flex-col items-center justify-center max-w-sm m-auto mt-5 bg-pink-400 rounded-3xl">
             <div className="pt-6 m-auto mt-3 mb-4 overflow-hidden bg-gray-300 border-4 border-blue-600 rounded shadow-lg w-36 ">
                 {/*@ts-ignore*/}
                 {pokemon?.sprites &&(
