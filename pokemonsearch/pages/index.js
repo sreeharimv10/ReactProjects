@@ -3,6 +3,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import logo from '../images/pokemon_logo.png'
 import Link from 'next/link'
+import {useTheme} from 'next-themes'
+import {MoonIcon, SunIcon} from '@heroicons/react/solid'
+
 
 export const getServerSideProps =async ()=>
 {
@@ -21,13 +24,41 @@ export const getServerSideProps =async ()=>
 export default function HeaderSec({electric, normal})
 {
     const [pokemon,putPokemon] = useState([])
-    const [query,setQuery]=useState('');
+    const [query,setQuery] = useState('');
     const [active, setActive] = useState(false);
+    const {systemTheme, theme, setTheme} = useTheme();
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => { setMounted(true)}, [])
 
     const handleClick = () =>
     {
         setActive(!active);
     };
+
+    //Dark Theme or Light Theme
+    const renderThemeChanger = () =>
+    {
+	    if(!mounted) return null;
+
+	    const currentTheme = theme === 'system' ? systemTheme : theme;
+
+	    if(currentTheme === 'dark' )
+	    {
+		    return (
+		    <SunIcon className="h-14 md:flex'
+            px-3 py-2 font-bold  rounded-full lg:w-auto  hover:bg-blue-700 '" role="button" onClick=
+		    {() => setTheme('light')}/> ) ;
+	    }
+
+	    else
+	    {
+		    return (
+		    <MoonIcon className="h-14 md:flex '
+            px-3 py-2 font-bold  rounded-3xl lg:w-auto  hover:bg-blue-700 '" role="button" onClick=
+		    {() => setTheme('dark')}/>);
+	    }
+    }
 
     /*const searchPokemon = (e) =>{
         e.preventDefault();
@@ -51,7 +82,7 @@ export default function HeaderSec({electric, normal})
             </Head>
 
             <main>
-                <nav className='flex flex-wrap items-center p-3 bg-blue-600'>
+                <nav className='flex flex-wrap items-center px-3 py-3 bg-blue-600 dark:bg-gray-700 '>
 
                     <Link href='/'>
                         <a className='inline-flex items-center p-2 ml-8 mr-4 '>
@@ -59,7 +90,7 @@ export default function HeaderSec({electric, normal})
                         </a>
                     </Link>
 
-                    <button className='inline-flex p-3 ml-auto text-white rounded outline-none hover:bg-blue-700 lg:hidden hover:text-white' onClick={handleClick}>
+                    <button className='inline-flex p-3 ml-auto text-white rounded outline-none hover:bg-blue-700 hover:text-white' onClick={handleClick}>
                         <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'
                         xmlns='http://www.w3.org/2000/svg'>
                             <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2}
@@ -70,11 +101,11 @@ export default function HeaderSec({electric, normal})
                     {/*Note that in this div we will use a ternary operator to decide whether or not to display the
                     content of the div  */}
 
-                    <div className={`${active ? '' : 'hidden'}   w-full lg:inline-flex lg:flex-grow lg:w-auto`}>
+                    <div className={`${active ? '' : 'hidden'}  w-full lg:inline-flex lg:flex-grow lg:w-auto`}>
                         <div className='flex flex-col items-start w-full lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto lg:items-center lg:h-auto'>
 
                             <div className="items-center md:flex 'items-center justify-center w-full
-                            px-3 py-2 font-bold  rounded lg:inline-flex lg:w-auto hover:bg-blue-700 '">
+                            px-3 py-2 font-bold rounded-3xl  0 lg:inline-flex lg:w-auto hover:bg-blue-700 '">
 
                                 <input id="search_name" className="p-2 " style={{borderTopLeftRadius: 30,
                                     borderBottomLeftRadius: 30}}
@@ -98,25 +129,35 @@ export default function HeaderSec({electric, normal})
                                     type="submit" value="Search" className="p-2 btn btn-light"/>
                             </div>
 
+                            {renderThemeChanger()}
+
                             <div className="items-center md:flex 'items-center justify-center w-full
-                            px-3 py-2 font-bold  rounded lg:inline-flex lg:w-auto hover:bg-blue-700 '">
+                            px-3 py-2 font-bold  rounded-3xl lg:inline-flex lg:w-auto hover:bg-blue-700 '">
                                 <Link href='/pokemonnames'>
-                                    <a className="p-1 bg-white rounded-full">Names</a>
+                                    <a className="p-2 bg-white rounded-full dark:bg-gray-900">Names</a>
                                 </Link>
                             </div>
 
                             <div className="items-center md:flex 'items-center justify-center w-full
-                            px-3 py-2 font-bold  rounded  lg:w-auto hover:bg-blue-700'">
+                            px-3 py-2 font-bold  rounded-3xl lg:w-auto  hover:bg-blue-700 '">
                                 <Link href='/types/pokemontypes'>
-                                    <a className="p-1 bg-white rounded-full">Types</a>
+                                    <a className="p-2 bg-white rounded-full dark:bg-gray-900 ">Types</a>
                                 </Link>
                             </div>
+
+                            {/*
+                            <div
+                                aria-label="Toggle Dark Mode"
+                                type="button"
+                                className="order-2 w-12 h-12 p-3 md:order-3"
+                                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>Dark
+                            </div>*/}
                         </div>
                     </div>
                 </nav>
 
                 {pokemon?.name &&
-                <div className="items-center max-w-xs pt-6 mt-3 mb-4 ml-auto mr-auto overflow-hidden bg-gray-300 border-4 border-blue-600 rounded shadow-lg">
+                <div className="max-w-xs pt-6 mt-3 mb-4 ml-auto mr-auto bg-green-400 border-8 border-blue-600 shadow-lg rounded-2xl dark:bg-blue-600 dark:border-green-400">
                         {pokemon?.sprites && (
 
                             // eslint-disable-next-line @next/next/no-img-element
@@ -147,7 +188,7 @@ export default function HeaderSec({electric, normal})
                                         pokemon.abilities.map((t) =>
                                         {
                                             // eslint-disable-next-line react/jsx-key
-                                            return <b>{t.ability.name.toUpperCase()}, </b>
+                                            return <b>{t.ability.name[0].toUpperCase()+ t.ability.name.slice(1)}, </b>
                                         })
                                     }
                                 </ul>
@@ -157,10 +198,10 @@ export default function HeaderSec({electric, normal})
                 }
 
                 {/*Electric Pokemon Showcase*/}
-                <h1 className="mt-2 text-4xl" style={{textAlign:"center"}} >
+                <h1 className="mt-6 text-4xl dark:text-yellow-400 " style={{textAlign:"center"}} >
                     <b>ELECTRIC POKEMONS</b>
                 </h1>
-                <div className="flex max-w-full overflow-y-auto space-x-10 bg-yellow-200 sm:w-100% scrollbar-hide bg-white shadow-md rounded-3xl p-2 my-3">
+                <div className="mb-6 flex ml-1 mr-1 max-w-full overflow-y-auto space-x-10 bg-yellow-300 dark:bg-yellow-500 sm:w-100% scrollbar-hide bg-white shadow-md rounded-3xl p-2 my-3">
                 {
                 electric.pokemon.map((name) =>
                 {
@@ -168,9 +209,9 @@ export default function HeaderSec({electric, normal})
                     <div key={name}>
                         <Link href={`/pokemon/${name.pokemon.name}`}>
                             <a>
-                                <div className="w-40 mt-2 mb-2 border-2 border-yellow-300 rounded-lg cardz">
+                                <div className="w-40 mt-2 mb-2 bg-blue-400 border-2 border-yellow-300 rounded-lg cardz">
                                     <img className="h-40 rounded-2xl" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${name.pokemon.url.slice(34,-1)}.png`} />
-                                        <div className="font-extrabold" style={{textAlign:"center"}}>
+                                        <div className="text-lg font-semibold " style={{textAlign:"center"}}>
                                         {
                                             name.pokemon.name.toUpperCase()
                                         }
@@ -184,10 +225,10 @@ export default function HeaderSec({electric, normal})
                 </div>
 
                 {/*Normal Pokemon Showcase*/}
-                <h1 className="mt-2 text-4xl" style={{textAlign:"center"}} >
+                <h1 className="my-3 text-4xl dark:text-yellow-400" style={{textAlign:"center"}} >
                     <b>NORMAL POKEMONS</b>
                 </h1>
-                <div className="flex max-w-full overflow-y-auto space-x-10 sm:w-100% scrollbar-hide bg-white shadow-md rounded-3xl p-2 my-3">
+                <div className="flex ml-1 mr-1 max-w-full overflow-y-auto space-x-10 sm:w-100% scrollbar-hide bg-yellow-300 dark:bg-yellow-500 shadow-md rounded-3xl p-2 my-3">
                 {
                 normal.pokemon.map((name) =>
                 {
@@ -195,9 +236,9 @@ export default function HeaderSec({electric, normal})
                     <div key={name}>
                         <Link href={`/pokemon/${name.pokemon.name}`}>
                             <a>
-                                <div className="w-40 mt-2 mb-2 border-2 border-yellow-300 rounded-lg cardz">
+                                <div className="w-40 mt-2 mb-2 bg-blue-400 border-2 border-yellow-300 rounded-lg cardz">
                                     <img className="h-40 rounded-2xl" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${name.pokemon.url.slice(34,-1)}.png`} />
-                                        <div className="font-extrabold" style={{textAlign:"center"}}>
+                                        <div className="text-lg font-semibold" style={{textAlign:"center"}}>
                                         {
                                             name.pokemon.name.toUpperCase()
                                         }

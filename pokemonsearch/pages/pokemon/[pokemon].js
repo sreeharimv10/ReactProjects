@@ -28,16 +28,16 @@ const PokemonPage = ({name, pokemon, error}) =>
         </div>:
 
     <div>
-        <nav className='flex flex-wrap items-center p-3 bg-blue-600'>
+        <nav className='flex flex-wrap items-center p-3 bg-blue-600 dark:bg-gray-700'>
             <Link href='/'>
                 <a className='inline-flex items-center p-2 mr-4 '>
                     <Image src={logo} alt="Logo" className="" width="190" height="70"/>
                 </a>
             </Link>
         </nav>
-
-        <div className="flex flex-col items-center justify-center max-w-sm m-auto mt-5 bg-pink-400 rounded-3xl">
-            <div className="pt-6 m-auto mt-3 mb-4 overflow-hidden bg-gray-300 border-4 border-blue-600 rounded shadow-lg w-36 ">
+        <div className="mt-24 ">
+        <div className="flex flex-col items-center max-w-xs m-auto bg-pink-400 dark:bg-red-500 rounded-3xl">
+            <div className="pt-6 m-auto mt-3 mb-4 overflow-hidden bg-pink-300 border-8 border-blue-600 rounded-3xl w-36 ">
                 {/*@ts-ignore*/}
                 {pokemon?.sprites &&(
                 // eslint-disable-next-line @next/next/no-img-element
@@ -46,7 +46,7 @@ const PokemonPage = ({name, pokemon, error}) =>
             </div>
 
             {/*@ts-ignore*/}
-            <b className="m-auto text-2xl">{pokemon?.name.toUpperCase()}</b>
+            <b className="text-2xl ">{pokemon?.name.toUpperCase()}</b>
 
             {/*@ts-ignore*/}
             {pokemon?.types?.length > 0 && (
@@ -56,10 +56,11 @@ const PokemonPage = ({name, pokemon, error}) =>
                 {
                     {/*@ts-ignore*/}
                     // eslint-disable-next-line react/jsx-key
-                    return <li className="flex-auto w-auto m-auto">{t.type.name}</li>
+                    return <li className="flex w-auto m-auto my-5 font-semibold">{t.type.name[0].toUpperCase()+ t.type.name.slice(1)}</li>
                 })}
             </ul>
             )}
+        </div>
         </div>
     </div>
 }
