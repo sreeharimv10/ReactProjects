@@ -15,13 +15,17 @@ export const getServerSideProps =async ()=>
 
     const nres  = await fetch(`https://pokeapi.co/api/v2/type/normal`)
     const ntype = await nres.json()
+    
+    const fres  = await fetch(`https://pokeapi.co/api/v2/type/fighting`)
+    const ftype = await fres.json()
+    
     return{
-        props :{electric : etype, normal : ntype }
+        props :{electric : etype, normal : ntype, fighting: ftype, }
     }
 }
 
 /** @param {import('next').InferGetServerSidePropsType<typeof getServerSideProps> } props */
-export default function HeaderSec({electric, normal})
+export default function HeaderSec({electric, normal, fighting})
 {
     const [pokemon,putPokemon] = useState([])
     const [query,setQuery] = useState('');
@@ -70,7 +74,7 @@ export default function HeaderSec({electric, normal})
     };*/
 
     return (
-        <div>
+        <div className="dark:bg-gray-700">
 
             <Head>
                 <title>Pokedex API</title>
@@ -82,7 +86,7 @@ export default function HeaderSec({electric, normal})
             </Head>
 
             <main>
-                <nav className='flex flex-wrap items-center px-3 py-3 bg-blue-600 dark:bg-gray-700 '>
+                <nav className='flex flex-wrap items-center p-1 bg-blue-600 dark:bg-blue-400 '>
 
                     <Link href='/'>
                         <a className='inline-flex items-center p-2 ml-8 mr-4 '>
@@ -90,7 +94,7 @@ export default function HeaderSec({electric, normal})
                         </a>
                     </Link>
 
-                    <button className='inline-flex p-3 ml-auto text-white rounded outline-none hover:bg-blue-700 hover:text-white' onClick={handleClick}>
+                    <button className='inline-flex p-3 ml-auto text-white rounded outline-none lg:hidden hover:bg-blue-700 hover:text-white' onClick={handleClick}>
                         <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'
                         xmlns='http://www.w3.org/2000/svg'>
                             <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2}
@@ -161,20 +165,21 @@ export default function HeaderSec({electric, normal})
                         {pokemon?.sprites && (
 
                             // eslint-disable-next-line @next/next/no-img-element
-                            <img className="p-4 ml-auto mr-auto bg-white rounded-full " alt="image" src={pokemon.sprites.front_default}height="100" width="110"/>
+                            <img className="p-4 ml-auto mr-auto bg-white rounded-full " alt="image" src={pokemon.sprites.front_default}height="110" width="110"/>
                         )}
 
                         <div className="px-6 py-2 ">
-                            <div className="mb-2 text-xl font-bold" style={{textAlign:"center"}}>{pokemon?.name.toUpperCase()}</div>
+                            <div className="p-1 mb-2 text-3xl font-bold text-center bg-white dark:text-black rounded-3xl ">{pokemon?.name.toUpperCase()}</div>
+
                             {pokemon?.types?.length > 0 && (
-                                <p className="mb-1 text-base">
+                                <p className="p-2 mb-1 bg-yellow-400 dark:bg-indigo-600 rounded-xl">
                                     <ul>
-                                        <b>Type:</b>
+                                        <p className="text-xl font-bold">Type:</p>
                                         {
                                             pokemon.types.map((t) =>
                                             {
                                                 // eslint-disable-next-line react/jsx-key
-                                                return <b> {t.type.name.toUpperCase()}</b>
+                                                return <li className="ml-16 text-lg font-semibold list-disc list-inside"> {t.type.name[0].toUpperCase()+ t.type.name.slice(1)}</li>
                                             })
                                         }
                                     </ul>
@@ -182,16 +187,18 @@ export default function HeaderSec({electric, normal})
                             )}
 
                             {pokemon?.types?.length > 0 && (
+                                <p className="p-2 my-2 text-base bg-red-500 rounded-lg dark:bg-purple-500">
                                 <ul>
-                                    <b>Abilities: </b>
+                                    <p className="text-xl font-bold">Abilities: </p>
                                     {
                                         pokemon.abilities.map((t) =>
                                         {
                                             // eslint-disable-next-line react/jsx-key
-                                            return <b>{t.ability.name[0].toUpperCase()+ t.ability.name.slice(1)}, </b>
+                                            return <li className="ml-16 text-xl font-semibold list-disc list-inside">{t.ability.name[0].toUpperCase()+ t.ability.name.slice(1)} </li>
                                         })
                                     }
                                 </ul>
+                                </p>
                             )}
                         </div>
                     </div>
@@ -201,7 +208,7 @@ export default function HeaderSec({electric, normal})
                 <h1 className="mt-6 text-4xl dark:text-yellow-400 " style={{textAlign:"center"}} >
                     <b>ELECTRIC POKEMONS</b>
                 </h1>
-                <div className="mb-6 flex ml-1 mr-1 max-w-full overflow-y-auto space-x-10 bg-yellow-300 dark:bg-yellow-500 sm:w-100% scrollbar-hide bg-white shadow-md rounded-3xl p-2 my-3">
+                <div className="mb-6 flex ml-1 mr-1 max-w-full overflow-y-auto space-x-10 bg-yellow-300 dark:bg-yellow-500 sm:w-100% scrollbar-hide rounded-3xl p-2 my-3">
                 {
                 electric.pokemon.map((name) =>
                 {
@@ -211,7 +218,7 @@ export default function HeaderSec({electric, normal})
                             <a>
                                 <div className="w-40 mt-2 mb-2 bg-blue-400 border-2 border-yellow-300 rounded-lg cardz">
                                     <img className="h-40 rounded-2xl" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${name.pokemon.url.slice(34,-1)}.png`} />
-                                        <div className="text-lg font-semibold " style={{textAlign:"center"}}>
+                                        <div className="p-0.5 text-lg font-semibold bg-white dark:bg-black" style={{textAlign:"center"}}>
                                         {
                                             name.pokemon.name.toUpperCase()
                                         }
@@ -238,7 +245,7 @@ export default function HeaderSec({electric, normal})
                             <a>
                                 <div className="w-40 mt-2 mb-2 bg-blue-400 border-2 border-yellow-300 rounded-lg cardz">
                                     <img className="h-40 rounded-2xl" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${name.pokemon.url.slice(34,-1)}.png`} />
-                                        <div className="text-lg font-semibold" style={{textAlign:"center"}}>
+                                        <div className="p-1 text-lg font-semibold bg-white dark:bg-black" style={{textAlign:"center"}}>
                                         {
                                             name.pokemon.name.toUpperCase()
                                         }
@@ -247,8 +254,33 @@ export default function HeaderSec({electric, normal})
                             </a>
                         </Link>
                     </div>)
-                })
-                }
+                })}
+                </div>
+
+                {/*Flying Pokemon Showcase*/}
+                <h1 className="my-3 text-4xl dark:text-yellow-400" style={{textAlign:"center"}} >
+                    <b>FIGHTING POKEMONS</b>
+                </h1>
+                <div className="flex ml-1 mr-1 max-w-full overflow-y-auto space-x-10 sm:w-100% scrollbar-hide bg-yellow-300 dark:bg-yellow-500 shadow-md rounded-3xl p-2 my-3">
+                {
+                fighting.pokemon.map((name) =>
+                {
+                    return (
+                    <div key={name}>
+                        <Link href={`/pokemon/${name.pokemon.name}`}>
+                            <a>
+                                <div className="w-40 mt-2 mb-2 bg-blue-400 border-2 border-yellow-300 rounded-lg cardz">
+                                    <img className="h-40 rounded-2xl" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${name.pokemon.url.slice(34,-1)}.png`} />
+                                        <div className="p-1 text-lg font-semibold bg-white dark:bg-black" style={{textAlign:"center"}}>
+                                        {
+                                            name.pokemon.name.toUpperCase()
+                                        }
+                                        </div>
+                                </div>
+                            </a>
+                        </Link>
+                    </div>)
+                })}
                 </div>
             </main>
         </div>
