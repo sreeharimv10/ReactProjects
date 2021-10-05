@@ -5,6 +5,7 @@ import logo from '../images/pokemon_logo.png'
 import Link from 'next/link'
 import {useTheme} from 'next-themes'
 import {MoonIcon, SunIcon} from '@heroicons/react/solid'
+import Pokeball from '../components/pokeball'
 
 
 export const getServerSideProps =async ()=>
@@ -15,10 +16,10 @@ export const getServerSideProps =async ()=>
 
     const nres  = await fetch(`https://pokeapi.co/api/v2/type/normal`)
     const ntype = await nres.json()
-    
+
     const fres  = await fetch(`https://pokeapi.co/api/v2/type/fighting`)
     const ftype = await fres.json()
-    
+
     return{
         props :{electric : etype, normal : ntype, fighting: ftype, }
     }
@@ -32,6 +33,13 @@ export default function HeaderSec({electric, normal, fighting})
     const [active, setActive] = useState(false);
     const {systemTheme, theme, setTheme} = useTheme();
     const [mounted, setMounted] = useState(false)
+    const [showModal, setShowModal] = useState(false);
+
+
+    useEffect( () =>
+    {
+        setShowModal(true);
+    }, []);
 
     useEffect(() => { setMounted(true)}, [])
 
@@ -84,6 +92,38 @@ export default function HeaderSec({electric, normal, fighting})
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
             </Head>
+
+            {/* Modal */}
+            <div>
+            {showModal ? (
+            <>
+                <div className="fixed z-50 flex items-center my-6 inset-1 w-lg ">
+                    <div className="flex flex-col w-full mx-1 bg-purple-200 rounded-xl">
+
+                        <div className="flex justify-between p-5 border-b border-solid rounded-t">
+                            <h2 className="text-lg font-bold text-center text-gray-800 bg">New to</h2>
+                        </div>
+
+                        <div>
+                            <Image src={logo} alt="mini-logo" height="100" width="300" className="ml-auto mr-auto"></Image>
+                        </div>
+
+                        <div className="flex items-center justify-end p-6 rounded-b border-blueGray-200">
+                            <button type="button" onClick={() => setShowModal(false)}
+                            className="px-4 py-1 mr-5 text-sm font-semibold text-black bg-green-400 rounded-lg">
+                            YES</button>
+
+                            <button type="button" onClick={() => setShowModal(false)}
+                            className="px-4 py-1 font-semibold border-4 border-green-500 rounded-lg text-xm text-green100 ">
+                            No</button>
+                        </div>
+
+                    </div>
+                </div>
+                <div className="fixed inset-0 z-40 bg-black opacity-40 "></div>
+                </>
+                ) : null}
+                </div>
 
             <main>
                 <nav className='flex flex-wrap items-center p-1 bg-blue-600 dark:bg-blue-400 '>
@@ -145,23 +185,15 @@ export default function HeaderSec({electric, normal, fighting})
                             <div className="items-center md:flex 'items-center justify-center w-full
                             px-3 py-2 font-bold  rounded-3xl lg:w-auto  hover:bg-blue-700 '">
                                 <Link href='/types/pokemontypes'>
-                                    <a className="p-2 bg-white rounded-full dark:bg-gray-900 ">Types</a>
+                                    <a className="p-2 bg-white rounded-full dark:bg-gray-900">Types</a>
                                 </Link>
                             </div>
-
-                            {/*
-                            <div
-                                aria-label="Toggle Dark Mode"
-                                type="button"
-                                className="order-2 w-12 h-12 p-3 md:order-3"
-                                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>Dark
-                            </div>*/}
                         </div>
                     </div>
                 </nav>
 
                 {pokemon?.name &&
-                <div className="max-w-xs pt-6 mt-3 mb-4 ml-auto mr-auto bg-green-400 border-8 border-blue-600 shadow-lg rounded-2xl dark:bg-blue-600 dark:border-green-400">
+                <div className="max-w-xs pt-6 mt-12 mb-12 ml-auto mr-auto bg-green-400 border-8 border-blue-600 shadow-lg rounded-2xl dark:bg-blue-600 dark:border-green-400">
                         {pokemon?.sprites && (
 
                             // eslint-disable-next-line @next/next/no-img-element
@@ -169,7 +201,27 @@ export default function HeaderSec({electric, normal, fighting})
                         )}
 
                         <div className="px-6 py-2 ">
-                            <div className="p-1 mb-2 text-3xl font-bold text-center bg-white dark:text-black rounded-3xl ">{pokemon?.name.toUpperCase()}</div>
+                            <div className="p-1 mb-2 text-3xl font-bold text-center bg-white border-2 border-purple-600 dark:text-black rounded-3xl ">{pokemon?.name.toUpperCase()}</div>
+
+                            <p className="p-2 my-2 text-base bg-yellow-400 rounded-lg dark:bg-indigo-600">
+                                <ul>
+                                    <p className="text-xl font-bold">Height: </p>
+                                    {
+                                            // eslint-disable-next-line react/jsx-key
+                                            <li className="ml-16 text-xl font-semibold list-disc list-inside">{pokemon?.height}0cm </li>
+                                    }
+                                </ul>
+                            </p>
+
+                            <p className="p-2 my-2 text-base bg-red-500 rounded-lg dark:bg-purple-500">
+                                <ul>
+                                    <p className="text-xl font-bold">Weight: </p>
+                                    {
+                                            // eslint-disable-next-line react/jsx-key
+                                            <li className="ml-16 text-xl font-semibold list-disc list-inside">{pokemon?.weight}kgs </li>
+                                    }
+                                </ul>
+                            </p>
 
                             {pokemon?.types?.length > 0 && (
                                 <p className="p-2 mb-1 bg-yellow-400 dark:bg-indigo-600 rounded-xl">
@@ -205,9 +257,11 @@ export default function HeaderSec({electric, normal, fighting})
                 }
 
                 {/*Electric Pokemon Showcase*/}
-                <h1 className="mt-6 text-4xl dark:text-yellow-400 " style={{textAlign:"center"}} >
-                    <b>ELECTRIC POKEMONS</b>
+                <div className="m-auto">
+                <h1 className="flex mt-6 text-2xl text-center dark:text-yellow-400">
+                <Pokeball/><b>ELECTRIC POKEMONS</b><Pokeball/>
                 </h1>
+                </div>
                 <div className="mb-6 flex ml-1 mr-1 max-w-full overflow-y-auto space-x-10 bg-yellow-300 dark:bg-yellow-500 sm:w-100% scrollbar-hide rounded-3xl p-2 my-3">
                 {
                 electric.pokemon.map((name) =>
@@ -232,9 +286,11 @@ export default function HeaderSec({electric, normal, fighting})
                 </div>
 
                 {/*Normal Pokemon Showcase*/}
-                <h1 className="my-3 text-4xl dark:text-yellow-400" style={{textAlign:"center"}} >
-                    <b>NORMAL POKEMONS</b>
+                <div className="m-auto">
+                <h1 className="flex mt-6 text-2xl text-center dark:text-yellow-400">
+                <Pokeball/><b>NORMAL POKEMONS</b><Pokeball/>
                 </h1>
+                </div>
                 <div className="flex ml-1 mr-1 max-w-full overflow-y-auto space-x-10 sm:w-100% scrollbar-hide bg-yellow-300 dark:bg-yellow-500 shadow-md rounded-3xl p-2 my-3">
                 {
                 normal.pokemon.map((name) =>
@@ -258,9 +314,11 @@ export default function HeaderSec({electric, normal, fighting})
                 </div>
 
                 {/*Flying Pokemon Showcase*/}
-                <h1 className="my-3 text-4xl dark:text-yellow-400" style={{textAlign:"center"}} >
-                    <b>FIGHTING POKEMONS</b>
+                <div className="m-auto">
+                <h1 className="flex mt-6 text-2xl text-center dark:text-yellow-400">
+                <Pokeball/><b>FLYING POKEMONS</b><Pokeball/>
                 </h1>
+                </div>
                 <div className="flex ml-1 mr-1 max-w-full overflow-y-auto space-x-10 sm:w-100% scrollbar-hide bg-yellow-300 dark:bg-yellow-500 shadow-md rounded-3xl p-2 my-3">
                 {
                 fighting.pokemon.map((name) =>
